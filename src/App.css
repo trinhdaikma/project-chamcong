@@ -1,0 +1,40 @@
+.trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  margin: 8px;
+}
+
+.site-layout .site-layout-background {
+  background: #ffffff;
+}
+
+.logo-img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.logo-titlte{
+  margin: 0 8px;
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.header-layout{
+  padding: 0 24px;
+}
