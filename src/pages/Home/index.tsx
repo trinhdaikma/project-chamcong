@@ -10,7 +10,7 @@ import { updateMagicNumber } from "@/redux/actions/example";
 import { notify } from "@/utils/notify";
 import { ROUTES } from "@/constants/routers";
 import MainLayout from "@/components/Layout/Layout";
-
+import BranchMng from "../BranchMng";
 // TODO: talk
 
 /**
@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <h1>Welcome to homepage</h1>
+      <BranchMng />
     </MainLayout>
   );
 }
