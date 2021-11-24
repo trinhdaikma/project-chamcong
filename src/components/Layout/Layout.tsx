@@ -8,9 +8,9 @@
 // // others
 // import { store } from "@/redux/store";
 import {
-    MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined,
-    VideoCameraOutlined,
-  } from "@ant-design/icons";
+  MenuFoldOutlined, MenuUnfoldOutlined, UploadOutlined, UserOutlined,
+  VideoCameraOutlined,
+} from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
 import styles from "./layout.module.scss";
@@ -19,9 +19,9 @@ import "antd/dist/antd.css";
 
 const { Header, Sider, Content } = Layout;
 
-  /**
-   * App
-   */
+/**
+ * App
+ */
 interface MainLayoutProps {
   children: React.ReactNode;
 }
@@ -62,6 +62,7 @@ export default function MainLayout(props: MainLayoutProps) {
           <Content
             className={styles.site_layout_bg}
             style={{
+              overflow: "auto",
               margin: "24px 16px",
               padding: 24,
               minHeight: 280,
