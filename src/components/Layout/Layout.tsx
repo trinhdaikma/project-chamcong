@@ -34,8 +34,20 @@ export default function MainLayout(props: MainLayoutProps) {
   };
   return (
     <>
-      <Layout style={{ height: "100vh" }}>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
+      <Layout>
+        <Sider
+          trigger={null}
+          collapsible
+          collapsed={collapsed}
+          breakpoint="sm"
+          collapsedWidth="80"
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+        }}
+        >
           <div className={styles.logo}>
             <img className={styles.logo_img} alt="CSsoft" src="https://scontent.fhan3-1.fna.fbcdn.net/v/t1.6435-9/102812805_102376864857997_8227153299313844344_n.png?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=cHWZyAQINywAX8TOgR9&_nc_ht=scontent.fhan3-1.fna&oh=cbed7809d2c7032b5a4447c77e4d4efa&oe=61C0AED2" />
             <h3 className={styles.logo_title}>CSsoft</h3>
@@ -52,7 +64,7 @@ export default function MainLayout(props: MainLayoutProps) {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout className={styles.site_layout}>
+        <Layout className={styles.site_layout} style={{ marginLeft: collapsed ? 80 : 200, transition: "ease 0.28s" }}>
           <Header className={styles.site_layout_bg} style={{ padding: 0 }}>
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: styles.trigger,
@@ -64,7 +76,8 @@ export default function MainLayout(props: MainLayoutProps) {
             style={{
               margin: "24px 16px",
               padding: 24,
-              minHeight: 280,
+              overflow: "initial",
+              minHeight: "90vh",
             }}
           >
             {props.children}
