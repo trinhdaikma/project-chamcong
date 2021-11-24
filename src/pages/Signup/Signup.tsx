@@ -1,7 +1,7 @@
 // components
 // forms
+import BASE_URL from "@/api/BaseUrl/BaseUrl";
 import Banner from "@/components/banner/Banner";
-import BASE_URL from "@/constants/BaseUrl/BaseUrl";
 import axios from "axios";
 import SignupForm from "./mains/SignupForm/SignupForm";
 // others
@@ -16,7 +16,7 @@ export default function Signup() {
 
     axios({
       method: "post",
-      url: `${BASE_URL}register`,
+      url: `${BASE_URL}/auth/register`,
       data: {
         name: values.user.name,
         email: values.user.email,

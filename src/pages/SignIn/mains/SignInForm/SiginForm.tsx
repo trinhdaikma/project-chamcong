@@ -1,4 +1,4 @@
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, Avatar } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import classes from "./SignInForm.module.scss";
 import { Link } from "react-router-dom";
@@ -14,8 +14,10 @@ function SignInForm(props: any) {
         initialValues={{ remember: true }}
         onFinish={props.onFinish}
       >
-        <h3 style={{ textAlign: "center", marginBottom: "40px" }}>Sign In</h3>
-
+        <div className={classes.avatar}>
+          <Avatar size="large" icon={<UserOutlined />} />
+        </div>
+        <h3 style={{ textAlign: "center", margin: "10px 0 40px" }}>Sign In</h3>
         <Form.Item
           className="form-item"
           name={["user", "email"]}
@@ -53,6 +55,7 @@ function SignInForm(props: any) {
         </Form.Item>
         <Form.Item>
           <Button
+            // onClick={props.onClick}
             style={{ width: "100%", marginBottom: "20px" }}
             type="primary"
             htmlType="submit"

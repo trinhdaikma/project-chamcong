@@ -1,4 +1,4 @@
-import BASE_URL from "@/constants/BaseUrl/BaseUrl";
+import BASE_URL from "@/api/BaseUrl/BaseUrl";
 import axios from "axios";
 import classes from "./ForgotPassword.module.scss";
 import ForgotPasswordForm from "./mains/ForgotPasswordForm/ForgotPasswordForm";
@@ -8,7 +8,7 @@ export default function ForgotPassword() {
     console.log("Received values of form: ", values);
     axios({
       method: "post",
-      url: `${BASE_URL}forgot-password`,
+      url: `${BASE_URL}/auth/forgot-password`,
       data: {
         email: values.user.email,
       },
