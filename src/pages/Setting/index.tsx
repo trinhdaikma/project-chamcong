@@ -1,16 +1,11 @@
 // libs
 import { Button, Select } from "antd";
-import "./setting.scss";
-
 // hooks
 
-// others
-import { notify } from "@/utils/notify";
-import { ROUTES } from "@/constants/routers";
+//
 import MainLayout from "@/components/Layout/Layout";
-import TableSetting from "@/components/Table/TableSetting";
+import TableShiftsEmployee from "@/components/TableShiftsEmployee";
 import axios from "axios";
-import FormAddShifts from "@/components/TableAddShifts/FormAddShifts";
 import { useState } from "react";
 // TODO: talk
 
@@ -44,24 +39,25 @@ function handleSubmit() {
   //   console.log(err);
   // });
 }
-export default function Home() {
+export default function Setting() {
   const { Option } = Select;
 
   return (
     <MainLayout>
-      <div className="Setting">
+      <div className="SettingShiftEmployee">
+        Chọn trụ sở làm việc trước khi bắt đầu xếp lịch
         <Select
-          defaultValue="Chi nhánh 1"
+          defaultValue="Tất cả"
           style={{ width: 120 }}
           onChange={handleChange}
         >
+          <Option value="Tất cả">Tất cả</Option>
           <Option value="Chi nhánh 1">Chi Nhánh 1</Option>
           <Option value="Chi nhánh 2">Chi Nhánh 2</Option>
           <Option value="Chi nhánh 3">Chi nhánh 3</Option>
         </Select>
-        <FormAddShifts />
       </div>
-      <TableSetting />
+      <TableShiftsEmployee />
     </MainLayout>
   );
 }
