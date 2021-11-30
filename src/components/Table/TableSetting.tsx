@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 // eslint-disable-next-line no-use-before-define
@@ -5,9 +6,9 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { Table, Input, Popconfirm, Form } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { Unsubscribe } from "redux";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import Cookie from "universal-cookie";
+import EditShifts from "../EditShifts/EditShifts";
 
 const EditableContext = React.createContext<FormInstance<any> | null>(null);
 const cookie = new Cookie();
@@ -136,8 +137,8 @@ export default class EditableTable extends React.Component<
     super(props);
     this.columns = [
       {
-        title: "STT",
-        dataIndex: "key",
+        title: "Mã ca",
+        dataIndex: "id",
         width: "20px",
       },
       {
@@ -154,11 +155,6 @@ export default class EditableTable extends React.Component<
         dataIndex: "ending_hour",
       },
       {
-        title: "Trạng thái",
-        dataIndex: "status",
-        editable: true,
-      },
-      {
         title: "Hệ số",
         dataIndex: "coefficient",
       },
@@ -169,59 +165,38 @@ export default class EditableTable extends React.Component<
       {
         title: "#",
         dataIndex: "operation",
+        width: "50px",
         render: (_, record: any) => (
           <>
-            <Popconfirm
-              title="Xóa ca làm việc?"
-              // onConfirm={() => this.handleDelete(record)}
+            <div
+              className="action"
+              style={{ display: "flex", alignItems: "center" }}
             >
-              <a style={{ fontSize: "20px", color: "red" }}>
-                <DeleteOutlined />
-              </a>
-            </Popconfirm>
-            <a style={{ margin: "0 0 0 15px", fontSize: "20px" }}>
-              <EditOutlined />
-            </a>
+              <Popconfirm
+                title="Xóa ca làm việc?"
+                // onConfirm={() => this.handleDelete(record)}
+              >
+                <a style={{ fontSize: "13px", color: "red" }}>Delete</a>
+              </Popconfirm>
+              <EditShifts />
+            </div>
           </>
         ),
       },
     ];
 
     this.state = {
-      dataSource: [
-        {
-          key: "1",
-          name: "Hành chính",
-          starting_hour: "08",
-          ending_hour: "17",
-          starting_minutes: "00",
-          ending_minutes: "00",
-          status: 1,
-          coefficient: 1.2,
-          break_time: "08:00",
-        },
-        {
-          key: "2",
-          name: "Ca sáng",
-          starting_hour: "08",
-          ending_hour: "17",
-          starting_minutes: "00",
-          ending_minutes: "00",
-          status: 1,
-          coefficient: 1.2,
-          break_time: "08:00",
-        },
-      ],
+      dataSource: [],
       // eslint-disable-next-line react/no-unused-state
-      count: 4, //
+      count: 0, //
     };
   }
 
   async componentDidMount() {
     const token = cookie.get("token");
-    axios
+    await axios
       .get(
-        "http://timekeeping.cssdemoco.com/api/office-shifts?page=1&limit=6&office_id=2",
+        `${process.env.REACT_APP_DOMAIN_URL}api/office-shifts?page=1&limit=6&office_id=3`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -230,23 +205,46 @@ export default class EditableTable extends React.Component<
         }
       )
       .then((res) => {
-        console.log(res.data);
+        const tmp: any = [];
+        let num = 0;
+        res.data.data.forEach((e: Item) => {
+          e.starting_hour =
+            Number(e.starting_hour) > 9
+              ? `${e.starting_hour}`
+              : `0${e.starting_hour}`;
+          e.starting_minutes =
+            Number(e.starting_minutes) > 9
+              ? `${e.starting_minutes}`
+              : `0${e.starting_minutes}`;
+          e.ending_hour =
+            Number(e.ending_hour) > 9
+              ? `${e.ending_hour}`
+              : `0${e.ending_hour}`;
+          e.ending_minutes =
+            Number(e.ending_minutes) > 9
+              ? `${e.ending_minutes}`
+              : `0${e.ending_minutes}`;
+          e.starting_hour += `:${e.starting_minutes}`;
+          e.ending_hour += `:${e.ending_minutes}`;
+          tmp.push(e);
+          num += 1;
+        });
+        this.setState({
+          // eslint-disable-next-line react/no-access-state-in-setstate
+          count: this.state.count + num,
+          dataSource: tmp,
+        });
+      })
+      .catch((e) => {
+        // eslint-disable-next-line no-alert
+        alert("Có lỗi xảy ra, vui lòng thử lại sau");
       });
   }
-
-  // componentWillUnmount(): void {
-  //   if (this.unsub) this.unsub();
-  // }
 
   handleDelete = (key: React.Key) => {
     // const dataSource = [...this.state.dataSource];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
-
-  // handleSave = async (row: DataType) => {
-  //   const { id, ...dataWrite } = row;
-  //   await setDoc(doc(db, "Point", id), dataWrite);
-  // };
 
   render() {
     const { dataSource } = this.state;
